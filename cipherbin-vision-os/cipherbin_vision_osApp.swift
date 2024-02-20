@@ -14,7 +14,7 @@ enum ActiveView {
 @main
 struct cipherbin_vision_osApp: App {
     @State private var activeView: ActiveView = .write
-    
+
     var body: some Scene {
         WindowGroup {
             VStack {
@@ -24,7 +24,7 @@ struct cipherbin_vision_osApp: App {
                 }
                 .pickerStyle(SegmentedPickerStyle())
                 .padding()
-                
+
                 switch activeView {
                 case .write:
                     WriteView()
