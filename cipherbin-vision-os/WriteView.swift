@@ -7,28 +7,90 @@
 
 import Foundation
 import SwiftUI
+import UIKit
 
 struct WriteView: View {
     @State private var message: String = ""
-    @State private var encryptedLink: String?
+    @State private var oneTimeURL: String?
+    @State private var showError: Bool = false
 
     var body: some View {
-        VStack {
+        VStack(spacing: 20) {
             TextEditor(text: $message)
-                .padding()
                 .border(Color.gray, width: 1)
+                .padding()
 
             Button("Encrypt and Generate Link") {
-                // TODO: call API to encrypt the message and generate a link
-                // This is a placeholder for actual network call
-                encryptedLink = "https://cipherb.in/encryptedLink"
+                Task {
+                    await postMessage()
+                }
             }
-            .padding()
 
-            if let encryptedLink = encryptedLink {
-                Text("Your encrypted link: \(encryptedLink)").padding()
+            if let oneTimeURL = oneTimeURL {
+                Text("Your one-time URL: \(oneTimeURL)")
+                    .padding()
+                    .contextMenu {
+                        Button(action: {
+                            UIPasteboard.general.string = oneTimeURL
+                        }) {
+                            Label("Copy to Clipboard", systemImage: "doc.on.doc")
+                        }
+                    }
+            }
+            
+            if showError {
+                Text("Failed to generate the link. Please try again.")
+                    .foregroundColor(.red)
+                    .padding()
             }
         }
-        .padding()
+    }
+    
+    func postMessage() async {
+        let uuid = UUID().uuidString
+        let message = "encrypted message"
+        let encryptionKey = "mockEncryptionKey"
+        
+        guard let url = URL(string: "https://api.cipherb.in/msg") else {
+            print("Invalid URL")
+            self.showError = true
+            return
+        }
+        
+        var req = URLRequest(url: url)
+        req.httpMethod = "POST"
+        req.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        let payload: [String: Any] = ["uuid": uuid, "message": message]
+        do {
+            let jsonData = try JSONSerialization.data(withJSONObject: payload, options: [])
+            req.httpBody = jsonData
+
+            let (_, resp) = try await URLSession.shared.data(for: req)
+
+            guard let httpResp = resp as? HTTPURLResponse, httpResp.statusCode == 200 else {
+                DispatchQueue.main.async {
+                    self.showError = true
+                }
+                return
+            }
+
+            // If the request is successful, build the final URL
+            let oneTimeUrl = "https://cipherb.in/msg?bin=\(uuid);\(encryptionKey)"
+
+            DispatchQueue.main.async {
+                self.oneTimeURL = oneTimeUrl
+                self.showError = false
+                // Copy to clipboard
+                UIPasteboard.general.string = oneTimeUrl
+            }
+
+            return
+        } catch {
+            DispatchQueue.main.async {
+                self.showError = true
+            }
+        }
     }
 }
+
