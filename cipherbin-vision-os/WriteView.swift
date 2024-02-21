@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 import UIKit
+import Security
 
 struct WriteView: View {
     @State private var message: String = ""
@@ -37,7 +38,7 @@ struct WriteView: View {
                         }
                     }
             }
-            
+
             if showError {
                 Text("Failed to generate the link. Please try again.")
                     .foregroundColor(.red)
@@ -45,22 +46,38 @@ struct WriteView: View {
             }
         }
     }
-    
+
+    func generateSecureRandomString(length: Int) -> String {
+        let charset = Array("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")
+        var randString = ""
+        var randomBytes = [UInt8](repeating: 0, count: length)
+        let result = SecRandomCopyBytes(kSecRandomDefault, randomBytes.count, &randomBytes)
+        if result == errSecSuccess {
+            randomBytes.forEach { byte in
+                let index = Int(byte) % charset.count
+                randString.append(charset[index])
+            }
+        } else {
+            print("Error generating random bytes")
+        }
+
+        return randString
+    }
+
     func postMessage() async {
         let uuid = UUID().uuidString
         let message = "encrypted message"
-        let encryptionKey = "mockEncryptionKey"
-        
+
         guard let url = URL(string: "https://api.cipherb.in/msg") else {
             print("Invalid URL")
             self.showError = true
             return
         }
-        
+
         var req = URLRequest(url: url)
         req.httpMethod = "POST"
         req.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        
+
         let payload: [String: Any] = ["uuid": uuid, "message": message]
         do {
             let jsonData = try JSONSerialization.data(withJSONObject: payload, options: [])
@@ -76,6 +93,7 @@ struct WriteView: View {
             }
 
             // If the request is successful, build the final URL
+            let encryptionKey = generateSecureRandomString(length: 32)
             let oneTimeUrl = "https://cipherb.in/msg?bin=\(uuid);\(encryptionKey)"
 
             DispatchQueue.main.async {
@@ -93,4 +111,3 @@ struct WriteView: View {
         }
     }
 }
-
