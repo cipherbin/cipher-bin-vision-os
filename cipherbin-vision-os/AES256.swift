@@ -42,11 +42,11 @@ class AES256 {
             throw error
         }
     }
-    
+
     enum EncryptionError: Error {
         case initializationFailed
     }
-    
+
     enum DecryptionError: Error {
         case initializationFailed
         case decodingFailed

@@ -10,8 +10,8 @@ import SwiftUI
 
 struct ReadView: View {
     @State private var inputURL: String = ""
-    @State private var message: String? = nil
-    @State private var error: String? = nil
+    @State private var message: String?
+    @State private var error: String?
 
     var body: some View {
         VStack(spacing: 20) {
@@ -44,7 +44,7 @@ struct ReadView: View {
         }
         return binItem.value ?? ""
     }
-    
+
     func fetchAndDecryptMessage(binValue: String) {
         let parts = binValue.split(separator: ";").map(String.init)
         guard parts.count == 2, let uuid = parts.first, let encryptionKey = parts.last else {
