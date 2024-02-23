@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		B2839A042B83DF8E000B0ADD /* ReadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2839A032B83DF8E000B0ADD /* ReadView.swift */; };
 		B2839A062B83E114000B0ADD /* WriteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2839A052B83E114000B0ADD /* WriteView.swift */; };
+		B2A9BD4F2B891ECB00995345 /* AES256.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2A9BD4E2B891ECB00995345 /* AES256.swift */; };
+		B2A9BD522B891F9200995345 /* CryptoSwift in Frameworks */ = {isa = PBXBuildFile; productRef = B2A9BD512B891F9200995345 /* CryptoSwift */; };
 		B2C196142B83DA190025CD25 /* RealityKitContent in Frameworks */ = {isa = PBXBuildFile; productRef = B2C196132B83DA190025CD25 /* RealityKitContent */; };
 		B2C196162B83DA190025CD25 /* cipherbin_vision_osApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C196152B83DA190025CD25 /* cipherbin_vision_osApp.swift */; };
 		B2C1961C2B83DA1A0025CD25 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B2C1961B2B83DA1A0025CD25 /* Assets.xcassets */; };
@@ -29,6 +31,7 @@
 /* Begin PBXFileReference section */
 		B2839A032B83DF8E000B0ADD /* ReadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadView.swift; sourceTree = "<group>"; };
 		B2839A052B83E114000B0ADD /* WriteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteView.swift; sourceTree = "<group>"; };
+		B2A9BD4E2B891ECB00995345 /* AES256.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AES256.swift; sourceTree = "<group>"; };
 		B2C1960E2B83DA190025CD25 /* cipherbin-vision-os.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "cipherbin-vision-os.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2C196122B83DA190025CD25 /* RealityKitContent */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = RealityKitContent; sourceTree = "<group>"; };
 		B2C196152B83DA190025CD25 /* cipherbin_vision_osApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = cipherbin_vision_osApp.swift; sourceTree = "<group>"; };
@@ -45,6 +48,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B2C196142B83DA190025CD25 /* RealityKitContent in Frameworks */,
+				B2A9BD522B891F9200995345 /* CryptoSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -83,6 +87,7 @@
 				B2C196152B83DA190025CD25 /* cipherbin_vision_osApp.swift */,
 				B2839A032B83DF8E000B0ADD /* ReadView.swift */,
 				B2839A052B83E114000B0ADD /* WriteView.swift */,
+				B2A9BD4E2B891ECB00995345 /* AES256.swift */,
 				B2C1961B2B83DA1A0025CD25 /* Assets.xcassets */,
 				B2C196202B83DA1A0025CD25 /* Info.plist */,
 				B2C1961D2B83DA1A0025CD25 /* Preview Content */,
@@ -132,6 +137,7 @@
 			name = "cipherbin-vision-os";
 			packageProductDependencies = (
 				B2C196132B83DA190025CD25 /* RealityKitContent */,
+				B2A9BD512B891F9200995345 /* CryptoSwift */,
 			);
 			productName = "cipherbin-vision-os";
 			productReference = B2C1960E2B83DA190025CD25 /* cipherbin-vision-os.app */;
@@ -183,6 +189,9 @@
 				Base,
 			);
 			mainGroup = B2C196052B83DA190025CD25;
+			packageReferences = (
+				B2A9BD502B891F9200995345 /* XCRemoteSwiftPackageReference "CryptoSwift" */,
+			);
 			productRefGroup = B2C1960F2B83DA190025CD25 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -218,6 +227,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B2839A042B83DF8E000B0ADD /* ReadView.swift in Sources */,
+				B2A9BD4F2B891ECB00995345 /* AES256.swift in Sources */,
 				B2839A062B83E114000B0ADD /* WriteView.swift in Sources */,
 				B2C196162B83DA190025CD25 /* cipherbin_vision_osApp.swift in Sources */,
 			);
@@ -487,7 +497,23 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCRemoteSwiftPackageReference section */
+		B2A9BD502B891F9200995345 /* XCRemoteSwiftPackageReference "CryptoSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/krzyzanowskim/CryptoSwift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.8.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
+		B2A9BD512B891F9200995345 /* CryptoSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B2A9BD502B891F9200995345 /* XCRemoteSwiftPackageReference "CryptoSwift" */;
+			productName = CryptoSwift;
+		};
 		B2C196132B83DA190025CD25 /* RealityKitContent */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = RealityKitContent;

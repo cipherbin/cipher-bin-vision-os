@@ -66,11 +66,13 @@ struct WriteView: View {
 
     func postMessage() async {
         let uuid = UUID().uuidString
-        let message = "encrypted message"
-
-        guard let url = URL(string: "https://api.cipherb.in/msg") else {
-            print("Invalid URL")
-            self.showError = true
+        let encryptionKey = generateSecureRandomString(length: 32)
+        guard let encryptedMsg = AES256.encrypt(message: message, key: encryptionKey),
+              let url = URL(string: "https://api.cipherb.in/msg") else {
+            DispatchQueue.main.async {
+                self.showError = true
+            }
+            print("Invalid URL or encryption failed")
             return
         }
 
@@ -78,13 +80,12 @@ struct WriteView: View {
         req.httpMethod = "POST"
         req.addValue("application/json", forHTTPHeaderField: "Content-Type")
 
-        let payload: [String: Any] = ["uuid": uuid, "message": message]
+        let payload: [String: Any] = ["uuid": uuid, "message": encryptedMsg]
         do {
             let jsonData = try JSONSerialization.data(withJSONObject: payload, options: [])
             req.httpBody = jsonData
 
             let (_, resp) = try await URLSession.shared.data(for: req)
-
             guard let httpResp = resp as? HTTPURLResponse, httpResp.statusCode == 200 else {
                 DispatchQueue.main.async {
                     self.showError = true
@@ -93,7 +94,6 @@ struct WriteView: View {
             }
 
             // If the request is successful, build the final URL
-            let encryptionKey = generateSecureRandomString(length: 32)
             let oneTimeUrl = "https://cipherb.in/msg?bin=\(uuid);\(encryptionKey)"
 
             DispatchQueue.main.async {
