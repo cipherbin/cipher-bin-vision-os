@@ -17,15 +17,31 @@ struct WriteView: View {
 
     var body: some View {
         VStack(spacing: 20) {
+            Text("Type your message below...")
+                .font(.headline)
+                .foregroundColor(.white)
+                .padding()
+
             TextEditor(text: $message)
+                .frame(minHeight: 300)
                 .border(Color.gray, width: 1)
                 .padding()
 
-            Button("Encrypt and Generate Link") {
+            Button(action: {
                 Task {
                     await postMessage()
                 }
+            }) {
+                Text("Encrypt")
+                    .foregroundColor(.white)
+                    .padding(.vertical, 10)
+                    .padding(.horizontal, 30)
             }
+            .background(Color.blue)
+            .cornerRadius(10)
+            .buttonStyle(PlainButtonStyle())
+            .padding()
+            .shadow(radius: 5)
 
             if let oneTimeURL = oneTimeURL {
                 Text("Your one-time URL: \(oneTimeURL)")

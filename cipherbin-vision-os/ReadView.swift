@@ -19,10 +19,22 @@ struct ReadView: View {
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .padding()
 
-            Button("Decrypt Message") {
-                let binValue = extractBinValue(from: inputURL)
-                fetchAndDecryptMessage(binValue: binValue)
+            Button(action: {
+                Task {
+                    let binValue = extractBinValue(from: inputURL)
+                    fetchAndDecryptMessage(binValue: binValue)
+                }
+            }) {
+                Text("Decrypt Message")
+                    .foregroundColor(.white)
+                    .padding(.vertical, 10)
+                    .padding(.horizontal, 30)
             }
+            .background(Color.blue)
+            .cornerRadius(10)
+            .buttonStyle(PlainButtonStyle())
+            .padding()
+            .shadow(radius: 5)
 
             if let message = message {
                 Text(message)

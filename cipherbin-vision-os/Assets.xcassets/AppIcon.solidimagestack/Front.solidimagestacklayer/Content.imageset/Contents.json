@@ -1,6 +1,7 @@
 {
   "images" : [
     {
+      "filename" : "cipherbin_small_icon.png",
       "idiom" : "vision",
       "scale" : "2x"
     }

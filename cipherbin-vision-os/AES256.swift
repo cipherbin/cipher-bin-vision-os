@@ -9,7 +9,7 @@ import Foundation
 import CryptoSwift
 
 class AES256 {
-    static let blockSize = 16 // AES.BlockSize
+    static let blockSize = 16
 
     static func encrypt(message: String, key: String) throws -> String {
         guard let keyData = key.data(using: .utf8), let messageData = message.data(using: .utf8) else {
@@ -30,7 +30,7 @@ class AES256 {
     }
 
     static func decrypt(hexString: String, key: String) throws -> String {
-        guard let data = hexString.hexaToBytes, let keyData = key.data(using: .utf8) else {
+        guard let data = hexString.hexToBytes, let keyData = key.data(using: .utf8) else {
             throw AES256Error.invalidInput
         }
         let iv = [UInt8](data.prefix(AES.blockSize))
@@ -64,7 +64,7 @@ class AES256 {
 }
 
 extension String {
-    var hexaToBytes: [UInt8]? {
+    var hexToBytes: [UInt8]? {
         var startIndex = self.startIndex
         return stride(from: 0, to: count, by: 2).compactMap { _ in
             let endIndex = self.index(startIndex, offsetBy: 2)
