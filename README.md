@@ -1,3 +1,1 @@
-<video width="900" height="900" controls>
-  <source src="https://cipher-bin-vision-os-demo.s3.us-west-2.amazonaws.com/demo.mp4" type="video/mp4">
-</video>
+https://github.com/cipherbin/cipher-bin-vision-os/assets/15638147/d85ac790-0942-40a9-a581-ec60b374cdfc
