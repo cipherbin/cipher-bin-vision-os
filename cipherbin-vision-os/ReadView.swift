@@ -75,7 +75,7 @@ struct ReadView: View {
             do {
                 if let jsonResponse = try JSONSerialization.jsonObject(with: data) as? [String: Any],
                    let encryptedMessage = jsonResponse["message"] as? String,
-                   let decryptedMessage = try? AES256.decrypt(message: encryptedMessage, key: encryptionKey) {
+                   let decryptedMessage = try? AES256.decrypt(hexString: encryptedMessage, key: encryptionKey) {
                     DispatchQueue.main.async {
                         self.message = decryptedMessage
                         self.error = nil

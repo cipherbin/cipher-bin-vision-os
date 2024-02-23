@@ -65,7 +65,7 @@ struct WriteView: View {
     }
 
     func postMessage() async {
-        let uuid = UUID().uuidString
+        let uuid = UUID().uuidString.lowercased()
         let encryptionKey = generateSecureRandomString(length: 32)
 
         do {
