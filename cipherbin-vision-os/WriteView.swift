@@ -67,28 +67,28 @@ struct WriteView: View {
     func postMessage() async {
         let uuid = UUID().uuidString
         let encryptionKey = generateSecureRandomString(length: 32)
-        guard let encryptedMsg = AES256.encrypt(message: message, key: encryptionKey),
-              let url = URL(string: "https://api.cipherb.in/msg") else {
-            DispatchQueue.main.async {
-                self.showError = true
-            }
-            print("Invalid URL or encryption failed")
-            return
-        }
 
-        var req = URLRequest(url: url)
-        req.httpMethod = "POST"
-        req.addValue("application/json", forHTTPHeaderField: "Content-Type")
-
-        let payload: [String: Any] = ["uuid": uuid, "message": encryptedMsg]
         do {
+            guard let encryptedMsg = try? AES256.encrypt(message: message, key: encryptionKey),
+                  let url = URL(string: "https://api.cipherb.in/msg") else {
+                DispatchQueue.main.async {
+                    self.showError = true
+                }
+                return
+            }
+
+            var req = URLRequest(url: url)
+            req.httpMethod = "POST"
+            req.addValue("application/json", forHTTPHeaderField: "Content-Type")
+
+            let payload: [String: Any] = ["uuid": uuid, "message": encryptedMsg]
             let jsonData = try JSONSerialization.data(withJSONObject: payload, options: [])
             req.httpBody = jsonData
 
-            let (_, resp) = try await URLSession.shared.data(for: req)
-            guard let httpResp = resp as? HTTPURLResponse, httpResp.statusCode == 200 else {
+            let (_, response) = try await URLSession.shared.data(for: req)
+            guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
                 DispatchQueue.main.async {
-                    self.showError = true
+                    self.showError = true // Show error if the HTTP response status code is not 200
                 }
                 return
             }
@@ -102,12 +102,11 @@ struct WriteView: View {
                 // Copy to clipboard
                 UIPasteboard.general.string = oneTimeUrl
             }
-
-            return
         } catch {
             DispatchQueue.main.async {
-                self.showError = true
+                self.showError = true // Show error if any other part of the try block fails
             }
+            print("Unexpected error: \(error.localizedDescription)")
         }
     }
 }

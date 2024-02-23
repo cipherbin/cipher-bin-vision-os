@@ -9,38 +9,46 @@ import Foundation
 import CryptoSwift
 
 class AES256 {
-    static func encrypt(message: String, key: String) -> String? {
+    static func encrypt(message: String, key: String) throws -> String {
         guard let keyData = key.data(using: .utf8), let messageData = message.data(using: .utf8) else {
-            return nil
+            throw EncryptionError.initializationFailed
         }
-        
+
         do {
             let aes = try AES(key: keyData.bytes, blockMode: CBC(iv: AES.randomIV(AES.blockSize)), padding: .pkcs7)
             let encryptedBytes = try aes.encrypt(messageData.bytes)
-            
             return encryptedBytes.toHexString()
         } catch {
-            print("Encryption error: \(error)")
-            return nil
+            throw error // Propagate the error
         }
     }
 
-    func decrypt(hexString: String, key: String) -> String? {
-        guard let keyData = key.data(using: .utf8) else {
-            return nil
+    static func decrypt(message: String, key: String) throws -> String {
+        guard let data = Data(base64Encoded: message),
+              let keyData = key.data(using: .utf8) else {
+            throw DecryptionError.initializationFailed
         }
-        let encryptedData = Data(hex: hexString)
-        let iv = Array(encryptedData[0..<AES.blockSize])
-        let encryptedBytes = Array(encryptedData[AES.blockSize...])
-        
+        let iv = data.prefix(16)
+        let encryptedDataBytes = data.dropFirst(16)
+
         do {
-            let aes = try AES(key: keyData.bytes, blockMode: CBC(iv: iv), padding: .pkcs7)
-            let decryptedBytes = try aes.decrypt(encryptedBytes)
-            
-            return String(bytes: decryptedBytes, encoding: .utf8)
+            let aes = try AES(key: keyData.bytes, blockMode: CBC(iv: Array(iv)), padding: .pkcs7)
+            let decryptedBytes = try aes.decrypt(Array(encryptedDataBytes))
+            guard let decryptedMessage = String(data: Data(decryptedBytes), encoding: .utf8) else {
+                throw DecryptionError.decodingFailed
+            }
+            return decryptedMessage
         } catch {
-            print("Decryption error: \(error)")
-            return nil
+            throw error
         }
+    }
+    
+    enum EncryptionError: Error {
+        case initializationFailed
+    }
+    
+    enum DecryptionError: Error {
+        case initializationFailed
+        case decodingFailed
     }
 }
