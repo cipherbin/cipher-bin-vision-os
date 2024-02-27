@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B2357A2E2B8E76E30059D19F /* LockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2357A2D2B8E76E30059D19F /* LockView.swift */; };
+		B2357A302B8E7DC70059D19F /* Padlock.usdz in Resources */ = {isa = PBXBuildFile; fileRef = B2357A2F2B8E7DC70059D19F /* Padlock.usdz */; };
 		B2839A042B83DF8E000B0ADD /* ReadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2839A032B83DF8E000B0ADD /* ReadView.swift */; };
 		B2839A062B83E114000B0ADD /* WriteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2839A052B83E114000B0ADD /* WriteView.swift */; };
 		B2A9BD4F2B891ECB00995345 /* AES256.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2A9BD4E2B891ECB00995345 /* AES256.swift */; };
@@ -30,6 +32,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B2357A2D2B8E76E30059D19F /* LockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockView.swift; sourceTree = "<group>"; };
+		B2357A2F2B8E7DC70059D19F /* Padlock.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; name = Padlock.usdz; path = ../../../../Downloads/Padlock.usdz; sourceTree = "<group>"; };
 		B2839A032B83DF8E000B0ADD /* ReadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadView.swift; sourceTree = "<group>"; };
 		B2839A052B83E114000B0ADD /* WriteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteView.swift; sourceTree = "<group>"; };
 		B2A9BD4E2B891ECB00995345 /* AES256.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AES256.swift; sourceTree = "<group>"; };
@@ -90,10 +94,12 @@
 				B2839A032B83DF8E000B0ADD /* ReadView.swift */,
 				B2839A052B83E114000B0ADD /* WriteView.swift */,
 				B2A9BD4E2B891ECB00995345 /* AES256.swift */,
+				B2A9BD532B89341F00995345 /* ContentView.swift */,
+				B2357A2D2B8E76E30059D19F /* LockView.swift */,
+				B2357A2F2B8E7DC70059D19F /* Padlock.usdz */,
 				B2C1961B2B83DA1A0025CD25 /* Assets.xcassets */,
 				B2C196202B83DA1A0025CD25 /* Info.plist */,
 				B2C1961D2B83DA1A0025CD25 /* Preview Content */,
-				B2A9BD532B89341F00995345 /* ContentView.swift */,
 			);
 			path = "cipherbin-vision-os";
 			sourceTree = "<group>";
@@ -211,6 +217,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B2C1961F2B83DA1A0025CD25 /* Preview Assets.xcassets in Resources */,
+				B2357A302B8E7DC70059D19F /* Padlock.usdz in Resources */,
 				B2C1961C2B83DA1A0025CD25 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -234,6 +241,7 @@
 				B2A9BD4F2B891ECB00995345 /* AES256.swift in Sources */,
 				B2839A062B83E114000B0ADD /* WriteView.swift in Sources */,
 				B2C196162B83DA190025CD25 /* cipherbin_vision_osApp.swift in Sources */,
+				B2357A2E2B8E76E30059D19F /* LockView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -14,5 +14,10 @@ struct cipherbin_vision_osApp: App {
             ContentView()
         }
         .defaultSize(CGSize(width: 700, height: 900))
+        
+        ImmersiveSpace(id: "lockSpace") {
+            LockView()
+        }
+        .defaultSize(CGSize(width: 200, height: 200))
     }
 }

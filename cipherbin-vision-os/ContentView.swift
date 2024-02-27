@@ -10,9 +10,16 @@ import Foundation
 
 struct ContentView: View {
     @State private var activeView: ActiveView = .write
+    @Environment(\.openImmersiveSpace) private var openImmersiveSpace
 
     var body: some View {
         VStack {
+            Button("Start AR Experience") {
+                Task {
+                  await openImmersiveSpace(id: "lockSpace")
+                }
+            }
+
             Image("cipherbin_logo_small.png")
                 .resizable()
                 .scaledToFit()
