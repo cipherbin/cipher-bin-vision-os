@@ -1,5 +1,5 @@
 //
-//  LockVIew.swift
+//  LockView.swift
 //  cipherbin-vision-os
 //
 //  Created by bradford lamson-scribner on 2/27/24.
